@@ -23,12 +23,13 @@
 
 package com.gazbert.bxbot.core.config.exchange;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
 import com.gazbert.bxbot.exchange.api.AuthenticationConfig;
 import com.gazbert.bxbot.exchange.api.NetworkConfig;
-import com.gazbert.bxbot.exchange.api.OptionalConfig;
+import com.gazbert.bxbot.exchange.api.OtherConfig;
 import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * Tests Exchange Config exchange API config object behaves as expected.
@@ -37,42 +38,39 @@ import static org.junit.Assert.assertEquals;
  */
 public class TestExchangeConfigImpl {
 
-    private static final String EXCHANGE_NAME = "Bitstamp";
-    private static final String EXCHANGE_ADAPTER = "com.gazbert.bxbot.exchanges.TestExchangeAdapter";
-    private static final AuthenticationConfig AUTHENTICATION_CONFIG = new AuthenticationConfigImpl();
-    private static final NetworkConfig NETWORK_CONFIG = new NetworkConfigImpl();
-    private static final OptionalConfig OTHER_CONFIG = new OptionalConfigImpl();
+  private static final String EXCHANGE_NAME = "Bitstamp";
+  private static final String EXCHANGE_ADAPTER = "com.gazbert.bxbot.exchanges.TestExchangeAdapter";
+  private static final AuthenticationConfig AUTHENTICATION_CONFIG = new AuthenticationConfigImpl();
+  private static final NetworkConfig NETWORK_CONFIG = new NetworkConfigImpl();
+  private static final OtherConfig OTHER_CONFIG = new OtherConfigImpl();
 
+  @Test
+  public void testInitialisationWorksAsExpected() {
+    final ExchangeConfigImpl exchangeConfig = new ExchangeConfigImpl();
+    assertNull(exchangeConfig.getExchangeName());
+    assertNull(exchangeConfig.getExchangeAdapter());
+    assertNull(exchangeConfig.getAuthenticationConfig());
+    assertNull(exchangeConfig.getNetworkConfig());
+    assertNull(exchangeConfig.getOtherConfig());
+  }
 
-    @Test
-    public void testInitialisationWorksAsExpected() {
+  @Test
+  public void testSettersWorkAsExpected() {
+    final ExchangeConfigImpl exchangeConfig = new ExchangeConfigImpl();
 
-        final ExchangeConfigImpl exchangeConfig = new ExchangeConfigImpl();
-        assertEquals(null, exchangeConfig.getExchangeName());
-        assertEquals(null, exchangeConfig.getExchangeAdapter());
-        assertEquals(null, exchangeConfig.getAuthenticationConfig());
-        assertEquals(null, exchangeConfig.getNetworkConfig());
-        assertEquals(null, exchangeConfig.getOptionalConfig());
-    }
+    exchangeConfig.setExchangeName(EXCHANGE_NAME);
+    assertEquals(EXCHANGE_NAME, exchangeConfig.getExchangeName());
 
-    @Test
-    public void testSettersWorkAsExpected() {
+    exchangeConfig.setExchangeAdapter(EXCHANGE_ADAPTER);
+    assertEquals(EXCHANGE_ADAPTER, exchangeConfig.getExchangeAdapter());
 
-        final ExchangeConfigImpl exchangeConfig = new ExchangeConfigImpl();
+    exchangeConfig.setAuthenticationConfig(AUTHENTICATION_CONFIG);
+    assertEquals(AUTHENTICATION_CONFIG, exchangeConfig.getAuthenticationConfig());
 
-        exchangeConfig.setExchangeName(EXCHANGE_NAME);
-        assertEquals(EXCHANGE_NAME, exchangeConfig.getExchangeName());
+    exchangeConfig.setNetworkConfig(NETWORK_CONFIG);
+    assertEquals(NETWORK_CONFIG, exchangeConfig.getNetworkConfig());
 
-        exchangeConfig.setExchangeAdapter(EXCHANGE_ADAPTER);
-        assertEquals(EXCHANGE_ADAPTER, exchangeConfig.getExchangeAdapter());
-
-        exchangeConfig.setAuthenticationConfig(AUTHENTICATION_CONFIG);
-        assertEquals(AUTHENTICATION_CONFIG, exchangeConfig.getAuthenticationConfig());
-
-        exchangeConfig.setNetworkConfig(NETWORK_CONFIG);
-        assertEquals(NETWORK_CONFIG, exchangeConfig.getNetworkConfig());
-
-        exchangeConfig.setOptionalConfig(OTHER_CONFIG);
-        assertEquals(OTHER_CONFIG, exchangeConfig.getOptionalConfig());
-    }
+    exchangeConfig.setOtherConfig(OTHER_CONFIG);
+    assertEquals(OTHER_CONFIG, exchangeConfig.getOtherConfig());
+  }
 }
